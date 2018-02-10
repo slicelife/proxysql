@@ -10,7 +10,7 @@ DEBUG=${ALL_DEBUG}
 #export DEBUG
 #export OPTZ
 #export EXTRALINK
-CURVER?=1.4.6
+CURVER?=1.4.6-slice
 MAKEOPT=-j 4
 DISTRO := $(shell gawk -F= '/^NAME/{print $$2}' /etc/os-release)
 ifeq ($(wildcard /usr/lib/systemd/system), /usr/lib/systemd/system)
@@ -462,7 +462,7 @@ binaries/proxysql_${CURVER}-ubuntu16_amd64.deb:
 	docker rm ubuntu16_build || true
 	docker create --name ubuntu16_build renecannao/proxysql:build-ubuntu16 bash -c "while : ; do sleep 10 ; done"
 	docker start ubuntu16_build
-	docker exec ubuntu16_build bash -c "cd /opt; git clone -b v${CURVER} https://github.com/sysown/proxysql.git proxysql"
+	docker exec ubuntu16_build bash -c "cd /opt; git clone -b v${CURVER} https://github.com/slicelife/proxysql.git proxysql"
 	sleep 2
 	docker exec ubuntu16_build bash -c "cd /opt/proxysql; ${MAKE} clean && ${MAKE} ${MAKEOPT} build_deps && ${MAKE} ${MAKEOPT}"
 	sleep 2

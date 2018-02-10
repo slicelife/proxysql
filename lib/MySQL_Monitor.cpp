@@ -59,7 +59,7 @@ class ConsumerThread : public Thread {
 		thrn=_n;
 	}
 	void* run() {
-		// Remove 1 item at a time and process it. Blocks if no items are 
+		// Remove 1 item at a time and process it. Blocks if no items are
 		// available to process.
 		for (int i = 0; ( thrn ? i < thrn : 1) ; i++) {
 			WorkItem* item = (WorkItem*)m_queue.remove();
@@ -597,7 +597,7 @@ void * monitor_read_only_thread(void *arg) {
 	}
 
 	mmsd->t1=monotonic_time();
-	mmsd->async_exit_status=mysql_query_start(&mmsd->interr,mmsd->mysql,"SHOW GLOBAL VARIABLES LIKE 'read_only'");
+	mmsd->async_exit_status=mysql_query_start(&mmsd->interr,mmsd->mysql,"SHOW GLOBAL VARIABLES LIKE 'innodb_read_only'");
 	while (mmsd->async_exit_status) {
 		mmsd->async_exit_status=wait_for_mysql(mmsd->mysql, mmsd->async_exit_status);
 		unsigned long long now=monotonic_time();
@@ -835,7 +835,7 @@ __end_process_group_replication_result:
 		unsigned long long time_now=realtime_time();
 		time_now=time_now-(mmsd->t2 - start_time);
 		pthread_mutex_lock(&GloMyMon->group_replication_mutex);
-		//auto it = 
+		//auto it =
 		// TODO : complete this
 		std::map<std::string, MyGR_monitor_node *>::iterator it2;
 		it2 = GloMyMon->Group_Replication_Hosts_Map.find(s);
